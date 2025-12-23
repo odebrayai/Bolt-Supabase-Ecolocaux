@@ -8,7 +8,7 @@ import { Commerces } from './pages/Commerces';
 import { FicheCommerce } from './pages/FicheCommerce';
 import { Equipe } from './pages/Equipe';
 import RendezVous from './pages/RendezVous';
-
+import { Statistics } from './pages/Statistics';
 function AppContent() {
   const { user, loading } = useAuth();
   const [currentPage, setCurrentPage] = useState('dashboard');
@@ -66,7 +66,7 @@ function AppContent() {
       case 'rendez-vous':
         return <RendezVous />;
       case 'statistiques':
-        return (
+     return <Statistics />;
           <div className="p-8">
             <div className="bg-[#12121a] rounded-lg border border-[#1e293b] p-12 text-center">
               <h2 className="text-2xl font-bold text-[#f1f5f9] mb-2">Statistiques avancées</h2>
