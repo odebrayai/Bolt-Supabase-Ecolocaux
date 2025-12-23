@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Building2, TrendingUp, DollarSign, Activity, Calendar, Target, Trophy } from 'lucide-react';
+import { Building2, TrendingUp, Activity, Calendar, Target, Trophy } from 'lucide-react';
 import { Header } from '../components/Header';
 import { EvolutionLineChart } from '../components/charts/EvolutionLineChart';
 import { TypeDonutChart } from '../components/charts/TypeDonutChart';
@@ -30,8 +30,8 @@ export function Statistiques() {
       <div className="p-8">
         <div className="animate-pulse space-y-6">
           <div className="h-8 bg-slate-800 rounded w-64" />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[1, 2, 3, 4].map(i => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3].map(i => (
               <div key={i} className="h-32 bg-slate-800 rounded-lg" />
             ))}
           </div>
@@ -50,21 +50,12 @@ export function Statistiques() {
     );
   }
 
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('fr-FR', {
-      style: 'currency',
-      currency: 'EUR',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(value);
-  };
-
   return (
     <div>
       <Header title="Statistiques avancées" subtitle="Vue d'ensemble des performances" />
 
       <div className="p-8 space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="bg-[#12121a] rounded-lg p-6 border border-[#1e293b] hover:border-cyan-500/30 transition-all duration-200">
             <div className="flex items-center justify-between mb-4">
               <div className="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center">
@@ -87,18 +78,6 @@ export function Statistiques() {
               </div>
             </div>
             <p className="text-sm text-[#94a3b8]">Taux de conversion</p>
-          </div>
-
-          <div className="bg-[#12121a] rounded-lg p-6 border border-[#1e293b] hover:border-amber-500/30 transition-all duration-200">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 rounded-lg bg-amber-500/10 flex items-center justify-center">
-                <DollarSign className="w-6 h-6 text-amber-500" strokeWidth={1.5} />
-              </div>
-              <div className="text-right">
-                <p className="text-3xl font-bold text-[#f1f5f9]">{formatCurrency(data.kpis.caPotentiel)}</p>
-              </div>
-            </div>
-            <p className="text-sm text-[#94a3b8]">CA potentiel</p>
           </div>
 
           <div className="bg-[#12121a] rounded-lg p-6 border border-[#1e293b] hover:border-blue-500/30 transition-all duration-200">
@@ -140,13 +119,12 @@ export function Statistiques() {
                   <th className="text-right py-3 px-4 text-sm font-medium text-[#94a3b8]">Commerces</th>
                   <th className="text-right py-3 px-4 text-sm font-medium text-[#94a3b8]">Gagnés</th>
                   <th className="text-right py-3 px-4 text-sm font-medium text-[#94a3b8]">Taux</th>
-                  <th className="text-right py-3 px-4 text-sm font-medium text-[#94a3b8]">CA potentiel</th>
                 </tr>
               </thead>
               <tbody>
                 {data.topPerformers.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="text-center py-8 text-[#94a3b8]">
+                    <td colSpan={5} className="text-center py-8 text-[#94a3b8]">
                       Aucune donnée disponible
                     </td>
                   </tr>
@@ -170,7 +148,6 @@ export function Statistiques() {
                       <td className="py-3 px-4 text-right text-[#f1f5f9]">{performer.totalCommerces}</td>
                       <td className="py-3 px-4 text-right text-emerald-400">{performer.gagnes}</td>
                       <td className="py-3 px-4 text-right text-[#f1f5f9]">{performer.tauxConversion}%</td>
-                      <td className="py-3 px-4 text-right text-amber-400">{formatCurrency(performer.caPotentiel)}</td>
                     </tr>
                   ))
                 )}
@@ -189,13 +166,12 @@ export function Statistiques() {
                     <th className="text-left py-3 px-4 text-sm font-medium text-[#94a3b8]">Type</th>
                     <th className="text-right py-3 px-4 text-sm font-medium text-[#94a3b8]">Total</th>
                     <th className="text-right py-3 px-4 text-sm font-medium text-[#94a3b8]">Taux</th>
-                    <th className="text-right py-3 px-4 text-sm font-medium text-[#94a3b8]">CA moyen</th>
                   </tr>
                 </thead>
                 <tbody>
                   {data.performanceParType.length === 0 ? (
                     <tr>
-                      <td colSpan={4} className="text-center py-8 text-[#94a3b8]">
+                      <td colSpan={3} className="text-center py-8 text-[#94a3b8]">
                         Aucune donnée disponible
                       </td>
                     </tr>
@@ -213,7 +189,6 @@ export function Statistiques() {
                             {perf.tauxConversion}%
                           </span>
                         </td>
-                        <td className="py-3 px-4 text-right text-amber-400">{formatCurrency(perf.caMoyen)}</td>
                       </tr>
                     ))
                   )}
@@ -333,22 +308,6 @@ export function Statistiques() {
                     className="h-full bg-emerald-500 rounded-full transition-all duration-500"
                     style={{
                       width: `${Math.min((data.objectifsMois.realisationConversion / data.objectifsMois.objectifConversion) * 100, 100)}%`
-                    }}
-                  />
-                </div>
-              </div>
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-[#94a3b8]">CA potentiel</span>
-                  <span className="text-sm font-semibold text-[#f1f5f9]">
-                    {formatCurrency(data.objectifsMois.realisationCA)} / {formatCurrency(data.objectifsMois.objectifCA)}
-                  </span>
-                </div>
-                <div className="h-2 bg-[#1e293b] rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-amber-500 rounded-full transition-all duration-500"
-                    style={{
-                      width: `${Math.min((data.objectifsMois.realisationCA / data.objectifsMois.objectifCA) * 100, 100)}%`
                     }}
                   />
                 </div>
