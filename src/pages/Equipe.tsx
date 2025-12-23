@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Users, UserPlus, TrendingUp, Building2 } from 'lucide-react';
+import { Users, UserPlus, TrendingUp, Building2, X } from 'lucide-react';
 import { Header } from '../components/Header';
 import { supabase } from '../lib/supabase';
 import type { Database } from '../lib/database.types';
@@ -14,6 +14,17 @@ interface MemberWithStats extends Profile {
 export function Equipe() {
   const [membres, setMembres] = useState<MemberWithStats[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    prenom: '',
+    nom: '',
+    role: 'commercial' as 'admin' | 'commercial' | 'viewer'
+  });
 
   useEffect(() => {
     loadData();
@@ -103,6 +114,58 @@ export function Equipe() {
     return labels[role] || role;
   };
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setError('');
+    setSuccess('');
+
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (!session) {
+        setError('Vous devez être connecté pour inviter un membre');
+        return;
+      }
+
+      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-team-member`;
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.error || 'Erreur lors de la création du membre');
+      }
+
+      setSuccess('Membre invité avec succès!');
+      setFormData({
+        email: '',
+        password: '',
+        prenom: '',
+        nom: '',
+        role: 'commercial'
+      });
+
+      setTimeout(() => {
+        setShowModal(false);
+        setSuccess('');
+      }, 2000);
+
+      loadData();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Une erreur est survenue');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="p-8">
@@ -124,7 +187,10 @@ export function Equipe() {
         title="Équipe"
         subtitle={`${totalActifs} membre(s) actif(s)`}
         actions={
-          <button className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-200 text-sm font-semibold flex items-center gap-2">
+          <button
+            onClick={() => setShowModal(true)}
+            className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-200 text-sm font-semibold flex items-center gap-2"
+          >
             <UserPlus className="w-4 h-4" strokeWidth={1.5} />
             Inviter un membre
           </button>
@@ -235,6 +301,135 @@ export function Equipe() {
           </div>
         </div>
       </div>
+
+      {showModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-[#12121a] border border-[#1e293b] rounded-lg w-full max-w-md">
+            <div className="flex items-center justify-between p-6 border-b border-[#1e293b]">
+              <h3 className="text-lg font-semibold text-[#f1f5f9]">Inviter un membre</h3>
+              <button
+                onClick={() => {
+                  setShowModal(false);
+                  setError('');
+                  setSuccess('');
+                }}
+                className="text-[#94a3b8] hover:text-[#f1f5f9] transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSubmit} className="p-6 space-y-4">
+              {error && (
+                <div className="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-lg text-sm">
+                  {error}
+                </div>
+              )}
+
+              {success && (
+                <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-4 py-3 rounded-lg text-sm">
+                  {success}
+                </div>
+              )}
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-[#94a3b8] mb-2">
+                    Prénom
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.prenom}
+                    onChange={(e) => setFormData({ ...formData, prenom: e.target.value })}
+                    className="w-full bg-[#1a1a24] border border-[#1e293b] rounded-lg px-4 py-2 text-[#f1f5f9] focus:outline-none focus:border-cyan-500 transition-colors"
+                    placeholder="Jean"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-[#94a3b8] mb-2">
+                    Nom
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.nom}
+                    onChange={(e) => setFormData({ ...formData, nom: e.target.value })}
+                    className="w-full bg-[#1a1a24] border border-[#1e293b] rounded-lg px-4 py-2 text-[#f1f5f9] focus:outline-none focus:border-cyan-500 transition-colors"
+                    placeholder="Dupont"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-[#94a3b8] mb-2">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full bg-[#1a1a24] border border-[#1e293b] rounded-lg px-4 py-2 text-[#f1f5f9] focus:outline-none focus:border-cyan-500 transition-colors"
+                  placeholder="jean.dupont@exemple.com"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-[#94a3b8] mb-2">
+                  Mot de passe
+                </label>
+                <input
+                  type="password"
+                  required
+                  value={formData.password}
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  className="w-full bg-[#1a1a24] border border-[#1e293b] rounded-lg px-4 py-2 text-[#f1f5f9] focus:outline-none focus:border-cyan-500 transition-colors"
+                  placeholder="••••••••"
+                  minLength={6}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-[#94a3b8] mb-2">
+                  Rôle
+                </label>
+                <select
+                  value={formData.role}
+                  onChange={(e) => setFormData({ ...formData, role: e.target.value as 'admin' | 'commercial' | 'viewer' })}
+                  className="w-full bg-[#1a1a24] border border-[#1e293b] rounded-lg px-4 py-2 text-[#f1f5f9] focus:outline-none focus:border-cyan-500 transition-colors"
+                >
+                  <option value="commercial">Commercial</option>
+                  <option value="admin">Admin</option>
+                  <option value="viewer">Viewer</option>
+                </select>
+              </div>
+
+              <div className="flex gap-3 pt-4">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowModal(false);
+                    setError('');
+                    setSuccess('');
+                  }}
+                  className="flex-1 px-4 py-2 bg-[#1a1a24] border border-[#1e293b] text-[#94a3b8] rounded-lg hover:bg-slate-800 transition-colors"
+                >
+                  Annuler
+                </button>
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="flex-1 px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {submitting ? 'Invitation...' : 'Inviter'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
