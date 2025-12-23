@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Building2, TrendingUp, DollarSign, Activity, Star, Calendar, Target, Trophy } from 'lucide-react';
+import { Building2, TrendingUp, DollarSign, Activity, Calendar, Target, Trophy } from 'lucide-react';
 import { Header } from '../components/Header';
 import { EvolutionLineChart } from '../components/charts/EvolutionLineChart';
 import { TypeDonutChart } from '../components/charts/TypeDonutChart';
@@ -265,36 +265,7 @@ export function Statistiques() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="bg-[#12121a] rounded-lg border border-[#1e293b] p-6">
-            <div className="flex items-center gap-2 mb-4">
-              <Star className="w-5 h-5 text-yellow-500" strokeWidth={1.5} />
-              <h2 className="text-lg font-semibold text-[#f1f5f9]">Qualité Google</h2>
-            </div>
-            <div className="space-y-4">
-              <div>
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm text-[#94a3b8]">Note moyenne</span>
-                  <span className="text-2xl font-bold text-yellow-400">{data.qualiteGoogle.moyenneNote}/5</span>
-                </div>
-              </div>
-              <div>
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm text-[#94a3b8]">Total avis</span>
-                  <span className="text-xl font-semibold text-[#f1f5f9]">{data.qualiteGoogle.totalAvis}</span>
-                </div>
-              </div>
-              <div>
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm text-[#94a3b8]">Avec avis</span>
-                  <span className="text-xl font-semibold text-[#f1f5f9]">
-                    {data.qualiteGoogle.commercesAvecAvis} ({data.qualiteGoogle.pourcentageAvecAvis}%)
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="bg-[#12121a] rounded-lg border border-[#1e293b] p-6">
             <div className="flex items-center gap-2 mb-4">
               <Calendar className="w-5 h-5 text-blue-500" strokeWidth={1.5} />
