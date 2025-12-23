@@ -8,6 +8,7 @@ import { Commerces } from './pages/Commerces';
 import { FicheCommerce } from './pages/FicheCommerce';
 import { Equipe } from './pages/Equipe';
 import RendezVous from './pages/RendezVous';
+import { Statistiques } from './pages/Statistiques';
 
 function AppContent() {
   const { user, loading } = useAuth();
@@ -66,14 +67,7 @@ function AppContent() {
       case 'rendez-vous':
         return <RendezVous />;
       case 'statistiques':
-        return (
-          <div className="p-8">
-            <div className="bg-[#12121a] rounded-lg border border-[#1e293b] p-12 text-center">
-              <h2 className="text-2xl font-bold text-[#f1f5f9] mb-2">Statistiques avancées</h2>
-              <p className="text-[#94a3b8]">Cette fonctionnalité sera disponible prochainement</p>
-            </div>
-          </div>
-        );
+        return <Statistiques />;
       case 'parametres':
         return (
           <div className="p-8">
