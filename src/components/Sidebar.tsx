@@ -6,10 +6,10 @@ import {
   Users,
   BarChart3,
   Settings,
-  LogOut,
-  Store
+  LogOut
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import logo from '../assets/6obf1wetk0iahgcfkuyaa.png';
 
 interface SidebarProps {
   currentPage: string;
@@ -40,14 +40,12 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
   return (
     <aside className="fixed left-0 top-0 h-screen w-64 bg-[#12121a] border-r border-[#1e293b] flex flex-col">
       <div className="p-6 border-b border-[#1e293b]">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
-            <Store className="w-6 h-6 text-white" strokeWidth={2} />
-          </div>
-          <div>
-            <h1 className="text-lg font-bold text-[#f1f5f9] tracking-tight">CRM Eco-Locaux</h1>
-            <p className="text-xs text-[#94a3b8]">Prospection commerciale</p>
-          </div>
+        <div className="flex items-center justify-center">
+          <img
+            src={logo}
+            alt="ECO-LOCAUX"
+            className="h-10 w-auto object-contain"
+          />
         </div>
       </div>
 
