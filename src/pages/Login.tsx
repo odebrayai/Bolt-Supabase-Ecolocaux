@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Eye, EyeOff, Store } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import logo from '../assets/6obf1wetk0iahgcfkuyaa.png';
 
 export function Login() {
   const { signIn } = useAuth();
@@ -32,14 +33,16 @@ export function Login() {
       <div className="w-full max-w-md relative">
         <div className="bg-[#12121a] rounded-2xl shadow-2xl border border-[#1e293b] p-8">
           <div className="flex justify-center mb-8">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
-              <Store className="w-9 h-9 text-white" strokeWidth={2} />
-            </div>
+            <img
+              src={logo}
+              alt="ECO-LOCAUX"
+              className="h-16 w-auto object-contain"
+            />
           </div>
 
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold text-[#f1f5f9] mb-2">Connexion</h1>
-            <p className="text-sm text-[#94a3b8]">CRM Eco-Locaux - Prospection commerciale</p>
+            <p className="text-sm text-[#94a3b8]">Prospection commerciale</p>
           </div>
 
           {error && (
