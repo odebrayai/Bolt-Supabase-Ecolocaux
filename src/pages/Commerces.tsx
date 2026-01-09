@@ -379,25 +379,25 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
               <thead className="bg-[#1a1a24] border-b border-[#1e293b]">
                 <tr>
                   <th className="px-6 py-4 text-left text-xs font-medium text-[#94a3b8] uppercase tracking-wider">
-                    Nom
+                    Type
                   </th>
                   <th className="px-6 py-4 text-left text-xs font-medium text-[#94a3b8] uppercase tracking-wider">
-                    Type
+                    Nom
                   </th>
                   <th className="px-6 py-4 text-left text-xs font-medium text-[#94a3b8] uppercase tracking-wider">
                     Ville
                   </th>
                   <th className="px-6 py-4 text-left text-xs font-medium text-[#94a3b8] uppercase tracking-wider">
-                    Téléphone
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-medium text-[#94a3b8] uppercase tracking-wider">
                     Score
                   </th>
                   <th className="px-6 py-4 text-left text-xs font-medium text-[#94a3b8] uppercase tracking-wider">
-                    Commercial
+                    Statut
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-medium text-[#94a3b8] uppercase tracking-wider whitespace-nowrap">
+                    Téléphone
                   </th>
                   <th className="px-6 py-4 text-left text-xs font-medium text-[#94a3b8] uppercase tracking-wider">
-                    Statut
+                    Commercial
                   </th>
                 </tr>
               </thead>
@@ -416,9 +416,6 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
                       onClick={() => onSelectCommerce(commerce.id)}
                     >
                       <td className="px-6 py-4">
-                        <div className="text-sm font-medium text-[#f1f5f9]">{commerce.nom}</div>
-                      </td>
-                      <td className="px-6 py-4">
                         {commerce.type_commerce ? (
                           <span className={`px-2 py-1 rounded-md text-xs font-medium border ${getTypeColor(commerce.type_commerce)}`}>
                             {commerce.type_commerce}
@@ -428,9 +425,26 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
                         )}
                       </td>
                       <td className="px-6 py-4">
+                        <div className="text-sm font-medium text-[#f1f5f9]">{commerce.nom}</div>
+                      </td>
+                      <td className="px-6 py-4">
                         <div className="text-sm text-[#94a3b8]">{commerce.ville_recherche || 'N/A'}</div>
                       </td>
                       <td className="px-6 py-4">
+                        <BusinessScoreBadge business={commerce} compact />
+                      </td>
+                      <td className="px-6 py-4">
+                        {commerce.statut ? (
+                          <span className={`px-2 py-1 rounded-md text-xs font-medium border ${getStatutColor(commerce.statut)}`}>
+                            {getStatutLabel(commerce.statut)}
+                          </span>
+                        ) : (
+                          <span className="px-2 py-1 rounded-md text-xs font-medium border bg-slate-500/10 text-slate-400 border-slate-500/20">
+                            À contacter
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
                         {commerce.telephone && (
                           <a
                             href={`tel:${commerce.telephone}`}
@@ -441,9 +455,6 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
                             {commerce.telephone}
                           </a>
                         )}
-                      </td>
-                      <td className="px-6 py-4">
-                        <BusinessScoreBadge business={commerce} compact />
                       </td>
                       <td className="px-6 py-4">
                         {commerce.profiles ? (
@@ -457,17 +468,6 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
                           </div>
                         ) : (
                           <span className="text-sm text-[#94a3b8]">Non assigné</span>
-                        )}
-                      </td>
-                      <td className="px-6 py-4">
-                        {commerce.statut ? (
-                          <span className={`px-2 py-1 rounded-md text-xs font-medium border ${getStatutColor(commerce.statut)}`}>
-                            {getStatutLabel(commerce.statut)}
-                          </span>
-                        ) : (
-                          <span className="px-2 py-1 rounded-md text-xs font-medium border bg-slate-500/10 text-slate-400 border-slate-500/20">
-                            À contacter
-                          </span>
                         )}
                       </td>
                     </tr>
