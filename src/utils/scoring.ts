@@ -97,7 +97,7 @@ export function getScorePriorityDark(score: number): ScorePriority {
       score,
       category: 'max',
       label: 'Priorité Urgent',
-      emoji: '🔥',
+      emoji: '⭐⭐⭐⭐',
       colorClasses: 'bg-red-900/30 text-red-400 border-red-800/50'
     };
   }
@@ -106,7 +106,7 @@ export function getScorePriorityDark(score: number): ScorePriority {
       score,
       category: 'haute',
       label: 'Priorité Important',
-      emoji: '⚡',
+      emoji: '⭐⭐⭐',
       colorClasses: 'bg-orange-900/30 text-orange-400 border-orange-800/50'
     };
   }
@@ -115,7 +115,7 @@ export function getScorePriorityDark(score: number): ScorePriority {
       score,
       category: 'standard',
       label: 'Priorité Moyenne',
-      emoji: '✅',
+      emoji: '⭐⭐',
       colorClasses: 'bg-green-900/30 text-green-400 border-green-800/50'
     };
   }
@@ -123,7 +123,7 @@ export function getScorePriorityDark(score: number): ScorePriority {
     score,
     category: 'basse',
     label: 'Priorité Basse',
-    emoji: '⏸️',
+    emoji: '⭐',
     colorClasses: 'bg-gray-800/30 text-gray-400 border-gray-700/50'
   };
 }
