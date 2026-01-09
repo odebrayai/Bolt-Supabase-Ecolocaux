@@ -81,6 +81,15 @@ npm run build
 
 ## Utilisation
 
+### Compte de démonstration
+
+Pour tester l'application, utilisez le compte admin suivant :
+
+**Email:** `demo@ecolocaux.fr`
+**Mot de passe:** `Demo2024!`
+
+Ce compte dispose de tous les droits administrateur pour évaluer l'ensemble des fonctionnalités.
+
 ### Première connexion
 
 Pour créer votre premier utilisateur admin, utilisez la console Supabase ou inscrivez-vous directement via l'application.
