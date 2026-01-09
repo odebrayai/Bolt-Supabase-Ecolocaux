@@ -394,9 +394,6 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
                     Score
                   </th>
                   <th className="px-6 py-4 text-left text-xs font-medium text-[#94a3b8] uppercase tracking-wider">
-                    Note
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-medium text-[#94a3b8] uppercase tracking-wider">
                     Commercial
                   </th>
                   <th className="px-6 py-4 text-left text-xs font-medium text-[#94a3b8] uppercase tracking-wider">
@@ -410,7 +407,7 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
               <tbody className="divide-y divide-[#1e293b]">
                 {filteredCommerces.length === 0 ? (
                   <tr>
-                    <td colSpan={9} className="px-6 py-12 text-center text-[#94a3b8]">
+                    <td colSpan={8} className="px-6 py-12 text-center text-[#94a3b8]">
                       Aucun commerce trouvé
                     </td>
                   </tr>
@@ -450,9 +447,6 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
                       </td>
                       <td className="px-6 py-4">
                         <BusinessScoreBadge business={commerce} compact />
-                      </td>
-                      <td className="px-6 py-4">
-                        {renderStars(commerce.note)}
                       </td>
                       <td className="px-6 py-4">
                         {commerce.profiles ? (
