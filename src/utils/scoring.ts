@@ -96,7 +96,7 @@ export function getScorePriorityDark(score: number): ScorePriority {
     return {
       score,
       category: 'max',
-      label: 'Priorité MAX',
+      label: 'Priorité Urgent',
       emoji: '🔥',
       colorClasses: 'bg-red-900/30 text-red-400 border-red-800/50'
     };
@@ -105,7 +105,7 @@ export function getScorePriorityDark(score: number): ScorePriority {
     return {
       score,
       category: 'haute',
-      label: 'Haute Priorité',
+      label: 'Priorité Important',
       emoji: '⚡',
       colorClasses: 'bg-orange-900/30 text-orange-400 border-orange-800/50'
     };
@@ -114,7 +114,7 @@ export function getScorePriorityDark(score: number): ScorePriority {
     return {
       score,
       category: 'standard',
-      label: 'Standard',
+      label: 'Priorité Moyenne',
       emoji: '✅',
       colorClasses: 'bg-green-900/30 text-green-400 border-green-800/50'
     };
@@ -122,7 +122,7 @@ export function getScorePriorityDark(score: number): ScorePriority {
   return {
     score,
     category: 'basse',
-    label: 'Basse Priorité',
+    label: 'Priorité Basse',
     emoji: '⏸️',
     colorClasses: 'bg-gray-800/30 text-gray-400 border-gray-700/50'
   };

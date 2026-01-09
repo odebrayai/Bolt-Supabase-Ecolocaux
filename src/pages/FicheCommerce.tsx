@@ -230,7 +230,7 @@ export function FicheCommerce({ commerceId, onBack }: Props) {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
-            <BusinessScoreCard business={commerce} showBreakdown={true} />
+            <BusinessScoreCard business={commerce} showBreakdown={false} />
 
             <div className="bg-[#12121a] rounded-lg border border-[#1e293b] p-6">
               <h2 className="text-lg font-semibold text-[#f1f5f9] mb-4">Informations générales</h2>
@@ -474,19 +474,6 @@ export function FicheCommerce({ commerceId, onBack }: Props) {
                     value={commerce.panier_moyen || ''}
                     onChange={(e) => updateField('panier_moyen', e.target.value)}
                     placeholder="Ex: 15-25€"
-                    className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-[#f1f5f9] focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#f1f5f9] mb-2">Scoring IA</label>
-                  <input
-                    type="number"
-                    min="0"
-                    max="100"
-                    value={commerce.scoring_ia || ''}
-                    onChange={(e) => updateField('scoring_ia', e.target.value ? Number(e.target.value) : null)}
-                    placeholder="Score de 0 à 100"
                     className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-[#f1f5f9] focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500"
                   />
                 </div>
