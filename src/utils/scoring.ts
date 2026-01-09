@@ -4,8 +4,8 @@ export interface Business {
   telephone?: string | null;
   site_web?: string | null;
   email?: string | null;
-  note_google?: number | null;
-  nb_avis?: number | null;
+  note?: number | null;
+  nombre_avis?: number | null;
   panier_moyen?: number | null;
   type?: string | null;
   statut?: string | null;
@@ -22,76 +22,71 @@ export interface ScorePriority {
 
 export interface ScoreBreakdown {
   total: number;
-  noteGoogle: { score: number; max: 25 };
-  nombreAvis: { score: number; max: 35 };
-  panierMoyen: { score: number; max: 25 };
-  completude: { score: number; max: 15 };
+  noteGoogle: { score: number; max: 30 };
+  nombreAvis: { score: number; max: 50 };
+  completude: { score: number; max: 20 };
 }
 
 function calculateNoteGoogleScore(note?: number | null): number {
   if (!note) return 0;
-  if (note >= 4.5) return 25;
-  if (note >= 4.0) return 20;
-  if (note >= 3.5) return 15;
-  if (note >= 3.0) return 10;
-  return 5;
+  if (note >= 4.5) return 30;
+  if (note >= 4.0) return 24;
+  if (note >= 3.5) return 18;
+  if (note >= 3.0) return 12;
+  return 6;
 }
 
 function calculateNombreAvisScore(avis?: number | null): number {
   if (!avis || avis === 0) return 0;
-  if (avis > 200) return 35;
-  if (avis >= 100) return 30;
-  if (avis >= 50) return 25;
-  if (avis >= 20) return 18;
-  if (avis >= 10) return 12;
-  if (avis >= 5) return 7;
-  return 2;
+  if (avis > 200) return 50;
+  if (avis >= 100) return 43;
+  if (avis >= 50) return 36;
+  if (avis >= 20) return 26;
+  if (avis >= 10) return 17;
+  if (avis >= 5) return 10;
+  return 3;
 }
 
 function calculatePanierMoyenScore(panier?: number | null): number {
   if (!panier) return 0;
-  if (panier >= 40) return 25;
-  if (panier >= 25) return 20;
-  if (panier >= 15) return 15;
-  if (panier >= 5) return 10;
-  return 5;
+  if (panier >= 40) return 5;
+  if (panier >= 25) return 4;
+  if (panier >= 15) return 3;
+  if (panier >= 5) return 2;
+  return 1;
 }
 
 function calculateCompletudeScore(business: Business): number {
   let score = 0;
-  if (business.site_web) score += 8;
-  if (business.telephone) score += 4;
-  if (business.email) score += 3;
+  if (business.site_web) score += 6;
+  if (business.telephone) score += 5;
+  if (business.email) score += 4;
+  score += calculatePanierMoyenScore(business.panier_moyen);
   return score;
 }
 
 export function calculateBusinessScore(business: Business): number {
-  const noteScore = calculateNoteGoogleScore(business.note_google);
-  const avisScore = calculateNombreAvisScore(business.nb_avis);
-  const panierScore = calculatePanierMoyenScore(business.panier_moyen);
+  const noteScore = calculateNoteGoogleScore(business.note);
+  const avisScore = calculateNombreAvisScore(business.nombre_avis);
   const completudeScore = calculateCompletudeScore(business);
 
-  return Math.round(noteScore + avisScore + panierScore + completudeScore);
+  return Math.round(noteScore + avisScore + completudeScore);
 }
 
 export function getScoreBreakdown(business: Business): ScoreBreakdown {
   return {
     total: calculateBusinessScore(business),
     noteGoogle: {
-      score: calculateNoteGoogleScore(business.note_google),
-      max: 25
+      score: calculateNoteGoogleScore(business.note),
+      max: 30
     },
     nombreAvis: {
-      score: calculateNombreAvisScore(business.nb_avis),
-      max: 35
-    },
-    panierMoyen: {
-      score: calculatePanierMoyenScore(business.panier_moyen),
-      max: 25
+      score: calculateNombreAvisScore(business.nombre_avis),
+      max: 50
     },
     completude: {
       score: calculateCompletudeScore(business),
-      max: 15
+      max: 20
     }
   };
 }
