@@ -1,4 +1,4 @@
-import { Star, MessageCircle, Euro, CheckCircle } from 'lucide-react';
+import { Star, MessageCircle, CheckCircle } from 'lucide-react';
 import type { Business } from '../utils/scoring';
 import { calculateBusinessScore, getScorePriorityDark, getScoreBreakdown } from '../utils/scoring';
 
@@ -74,18 +74,11 @@ export function BusinessScoreCard({ business, showBreakdown = false }: BusinessS
             color="bg-blue-400"
           />
           <ScoreBreakdownBar
-            icon={<Euro className="w-4 h-4 text-green-400" />}
-            label="Panier moyen"
-            score={breakdown.panierMoyen.score}
-            max={breakdown.panierMoyen.max}
-            color="bg-green-400"
-          />
-          <ScoreBreakdownBar
-            icon={<CheckCircle className="w-4 h-4 text-purple-400" />}
-            label="Complétude"
+            icon={<CheckCircle className="w-4 h-4 text-cyan-400" />}
+            label="Complétude (site, tél, email, panier)"
             score={breakdown.completude.score}
             max={breakdown.completude.max}
-            color="bg-purple-400"
+            color="bg-cyan-400"
           />
         </div>
       )}
