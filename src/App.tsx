@@ -15,16 +15,11 @@ function AppContent() {
   const { user, loading } = useAuth();
   const [currentPage, setCurrentPage] = useState('dashboard');
   const [selectedCommerceId, setSelectedCommerceId] = useState<string | null>(null);
-  const [showQRCode, setShowQRCode] = useState(false);
 
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('qr') === 'true' || window.location.pathname === '/qr') {
-      setShowQRCode(true);
-    }
-  }, []);
+  const urlParams = new URLSearchParams(window.location.search);
+  const isQRCodePage = urlParams.get('qr') === 'true' || window.location.pathname === '/qr';
 
-  if (showQRCode) {
+  if (isQRCodePage) {
     return <QRCodePage />;
   }
 
