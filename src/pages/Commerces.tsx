@@ -215,7 +215,7 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
 
   if (loading) {
     return (
-      <div className="p-8">
+      <div className="p-4 sm:p-6 lg:p-8">
         <div className="animate-pulse space-y-6">
           <div className="h-8 bg-slate-800 rounded w-64" />
           <div className="h-96 bg-slate-800 rounded-lg" />
@@ -231,22 +231,22 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
         subtitle={`${filteredCommerces.length} commerce(s)`}
         actions={
           <>
-            <button className="px-4 py-2 bg-transparent border border-slate-700 text-[#f1f5f9] rounded-lg hover:bg-slate-800 transition-all duration-200 text-sm font-medium flex items-center gap-2">
+            <button className="px-3 sm:px-4 py-2 bg-transparent border border-slate-700 text-[#f1f5f9] rounded-lg hover:bg-slate-800 transition-all duration-200 text-sm font-medium flex items-center gap-2">
               <Download className="w-4 h-4" strokeWidth={1.5} />
-              Exporter CSV
+              <span className="hidden sm:inline">Exporter CSV</span>
             </button>
             <button
               onClick={() => onNavigate('recherche')}
-              className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-200 text-sm font-semibold flex items-center gap-2"
+              className="px-3 sm:px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-200 text-sm font-semibold flex items-center gap-2"
             >
               <Plus className="w-4 h-4" strokeWidth={1.5} />
-              Nouvelle recherche
+              <span className="hidden sm:inline">Nouvelle recherche</span>
             </button>
           </>
         }
       />
 
-      <div className="p-8 space-y-6">
+      <div className="p-4 sm:p-6 lg:p-8 space-y-4 sm:space-y-6">
         <div className="bg-[#12121a] rounded-lg border border-[#1e293b] p-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
             <div className="relative">

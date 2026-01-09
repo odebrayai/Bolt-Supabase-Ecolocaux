@@ -187,7 +187,7 @@ export function FicheCommerce({ commerceId, onBack }: Props) {
 
   if (loading || !commerce) {
     return (
-      <div className="p-8">
+      <div className="p-4 sm:p-6 lg:p-8">
         <div className="animate-pulse space-y-6">
           <div className="h-8 bg-slate-800 rounded w-64" />
           <div className="h-96 bg-slate-800 rounded-lg" />
@@ -212,7 +212,7 @@ export function FicheCommerce({ commerceId, onBack }: Props) {
         }
       />
 
-      <div className="p-8">
+      <div className="p-4 sm:p-6 lg:p-8">
         {message && (
           <div className={`mb-6 p-4 rounded-lg border ${
             message.includes('Erreur')

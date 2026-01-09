@@ -27,7 +27,7 @@ export function Statistiques() {
 
   if (loading) {
     return (
-      <div className="p-8">
+      <div className="p-4 sm:p-6 lg:p-8">
         <div className="animate-pulse space-y-6">
           <div className="h-8 bg-slate-800 rounded w-64" />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -42,7 +42,7 @@ export function Statistiques() {
 
   if (!data) {
     return (
-      <div className="p-8">
+      <div className="p-4 sm:p-6 lg:p-8">
         <div className="bg-[#12121a] rounded-lg border border-[#1e293b] p-12 text-center">
           <p className="text-[#94a3b8]">Erreur lors du chargement des statistiques</p>
         </div>
@@ -54,8 +54,8 @@ export function Statistiques() {
     <div>
       <Header title="Statistiques avancées" subtitle="Vue d'ensemble des performances" />
 
-      <div className="p-8 space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="p-4 sm:p-6 lg:p-8 space-y-4 sm:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           <div className="bg-[#12121a] rounded-lg p-6 border border-[#1e293b] hover:border-cyan-500/30 transition-all duration-200">
             <div className="flex items-center justify-between mb-4">
               <div className="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center">
@@ -93,7 +93,7 @@ export function Statistiques() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           <div className="bg-[#12121a] rounded-lg border border-[#1e293b] p-6">
             <h2 className="text-lg font-semibold text-[#f1f5f9] mb-4">Évolution des statuts (7 derniers jours)</h2>
             <EvolutionLineChart data={data.evolution} />
@@ -156,7 +156,7 @@ export function Statistiques() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           <div className="bg-[#12121a] rounded-lg border border-[#1e293b] p-6">
             <h2 className="text-lg font-semibold text-[#f1f5f9] mb-4">Performance par type de commerce</h2>
             <div className="overflow-x-auto">
@@ -240,7 +240,7 @@ export function Statistiques() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           <div className="bg-[#12121a] rounded-lg border border-[#1e293b] p-6">
             <div className="flex items-center gap-2 mb-4">
               <Calendar className="w-5 h-5 text-blue-500" strokeWidth={1.5} />

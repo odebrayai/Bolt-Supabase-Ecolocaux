@@ -6,7 +6,9 @@ import {
   Users,
   BarChart3,
   Settings,
-  LogOut
+  LogOut,
+  X,
+  Menu
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import logo from '../assets/6obf1wetk0iahgcfkuyaa.png';
@@ -14,6 +16,9 @@ import logo from '../assets/6obf1wetk0iahgcfkuyaa.png';
 interface SidebarProps {
   currentPage: string;
   onNavigate: (page: string) => void;
+  isOpen: boolean;
+  onClose: () => void;
+  onToggle: () => void;
 }
 
 const menuItems = [
@@ -26,7 +31,7 @@ const menuItems = [
   { id: 'parametres', label: 'Paramètres', icon: Settings },
 ];
 
-export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
+export function Sidebar({ currentPage, onNavigate, isOpen, onClose, onToggle }: SidebarProps) {
   const { profile, signOut } = useAuth();
 
   const handleSignOut = async () => {
@@ -37,15 +42,48 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
     }
   };
 
+  const handleNavigate = (page: string) => {
+    onNavigate(page);
+    onClose();
+  };
+
   return (
-    <aside className="fixed left-0 top-0 h-screen w-64 bg-[#12121a] border-r border-[#1e293b] flex flex-col">
+    <>
+      <button
+        onClick={onToggle}
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-[#12121a] border border-[#1e293b] text-[#94a3b8] hover:text-cyan-500 transition-colors"
+        aria-label="Toggle menu"
+      >
+        <Menu className="w-6 h-6" />
+      </button>
+
+      {isOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black/50 z-40"
+          onClick={onClose}
+        />
+      )}
+
+      <aside className={`
+        fixed left-0 top-0 h-screen w-64 bg-[#12121a] border-r border-[#1e293b] flex flex-col z-40
+        transition-transform duration-300 ease-in-out
+        ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+        lg:translate-x-0
+      `}>
       <div className="p-6 border-b border-[#1e293b]">
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-between">
           <img
             src={logo}
             alt="ECO-LOCAUX"
             className="h-10 w-auto object-contain"
           />
+          <button
+            onClick={onClose}
+            className="lg:hidden p-1 rounded-lg text-[#94a3b8] hover:text-cyan-500 hover:bg-[#1a1a24] transition-colors"
+            aria-label="Close menu"
+          >
+            <X className="w-5 h-5" />
+          </button>
         </div>
       </div>
 
@@ -57,7 +95,7 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
           return (
             <button
               key={item.id}
-              onClick={() => onNavigate(item.id)}
+              onClick={() => handleNavigate(item.id)}
               className={`
                 w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200
                 ${isActive
@@ -95,5 +133,6 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
         </button>
       </div>
     </aside>
+    </>
   );
 }

@@ -168,7 +168,7 @@ export function Equipe() {
 
   if (loading) {
     return (
-      <div className="p-8">
+      <div className="p-4 sm:p-6 lg:p-8">
         <div className="animate-pulse space-y-6">
           <div className="h-8 bg-slate-800 rounded w-64" />
           <div className="h-96 bg-slate-800 rounded-lg" />
@@ -189,15 +189,15 @@ export function Equipe() {
         actions={
           <button
             onClick={() => setShowModal(true)}
-            className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-200 text-sm font-semibold flex items-center gap-2"
+            className="px-3 sm:px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-200 text-sm font-semibold flex items-center gap-2"
           >
             <UserPlus className="w-4 h-4" strokeWidth={1.5} />
-            Inviter un membre
+            <span className="hidden sm:inline">Inviter un membre</span>
           </button>
         }
       />
 
-      <div className="p-8 space-y-6">
+      <div className="p-4 sm:p-6 lg:p-8 space-y-4 sm:space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-[#12121a] rounded-lg p-6 border border-[#1e293b] hover:border-cyan-500/30 transition-all duration-200">
             <div className="flex items-center justify-between mb-4">
