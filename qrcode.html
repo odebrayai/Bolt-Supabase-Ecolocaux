@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Eco-Locaux</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #12121a 50%, #0a0a0f 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+        .card {
+            background: #12121a;
+            border: 1px solid #1e293b;
+            border-radius: 1.5rem;
+            padding: 3rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        h1 {
+            color: #f1f5f9;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+        }
+        .subtitle {
+            color: #94a3b8;
+            font-size: 1.125rem;
+        }
+        .qr-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        .qr-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        #qrcode {
+            display: block;
+        }
+        .url {
+            text-align: center;
+            color: #94a3b8;
+            font-family: monospace;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+            word-break: break-all;
+        }
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+        .btn-download {
+            background: linear-gradient(to right, #06b6d4, #2563eb);
+            color: white;
+        }
+        .btn-download:hover {
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+            transform: translateY(-2px);
+        }
+        .btn-copy {
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #f1f5f9;
+        }
+        .btn-copy:hover {
+            background: #334155;
+        }
+        .info-grid {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #1e293b;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .info-card {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+        .info-card h3 {
+            color: #f1f5f9;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .info-card p {
+            color: #94a3b8;
+            font-size: 0.75rem;
+            line-height: 1.5;
+        }
+        .tip {
+            margin-top: 1.5rem;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.875rem;
+        }
+        @media (max-width: 640px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="title">
+                <h1>QR Code Eco-Locaux</h1>
+                <p class="subtitle">Scannez pour accéder au CRM</p>
+            </div>
+
+            <div class="qr-wrapper">
+                <div class="qr-container">
+                    <canvas id="qrcode"></canvas>
+                </div>
+            </div>
+
+            <div class="url">
+                https://ecolocaux-olivier.bolt.host
+            </div>
+
+            <div class="buttons">
+                <button class="btn-download" onclick="downloadQR()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Télécharger PNG
+                </button>
+                <button class="btn-copy" onclick="copyURL()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                        <polyline points="16 6 12 2 8 6"></polyline>
+                        <line x1="12" y1="2" x2="12" y2="15"></line>
+                    </svg>
+                    Copier le lien
+                </button>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Pour la présentation</h3>
+                    <p>Affichez ce QR code sur grand écran ou imprimez-le pour votre démonstration</p>
+                </div>
+                <div class="info-card">
+                    <h3>Accès instantané</h3>
+                    <p>Les participants peuvent scanner le code avec leur smartphone pour accéder directement à l'application</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tip">
+            Astuce : Utilisez le mode plein écran (F11) pour une présentation optimale
+        </div>
+    </div>
+
+    <script>
+        const appUrl = 'https://ecolocaux-olivier.bolt.host';
+
+        // Generate QR code
+        const canvas = document.getElementById('qrcode');
+        QRCode.toCanvas(canvas, appUrl, {
+            width: 320,
+            margin: 2,
+            color: {
+                dark: '#0a0a0f',
+                light: '#ffffff'
+            },
+            errorCorrectionLevel: 'H'
+        });
+
+        function downloadQR() {
+            const canvas = document.getElementById('qrcode');
+            const link = document.createElement('a');
+            link.download = 'eco-locaux-qrcode.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        function copyURL() {
+            navigator.clipboard.writeText(appUrl).then(() => {
+                const btn = event.target.closest('button');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Copié !';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
