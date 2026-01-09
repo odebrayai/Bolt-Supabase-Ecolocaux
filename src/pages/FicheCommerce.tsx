@@ -142,6 +142,10 @@ export function FicheCommerce({ commerceId, onBack }: Props) {
 
       if (field === 'statut' && value === 'rdv_pris' && !showRdvForm) {
         setShowRdvForm(true);
+        setNewRdv(prev => ({
+          ...prev,
+          commercial_id: commerce.commercial_id || ''
+        }));
         setTimeout(() => {
           rdvSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }, 100);
@@ -510,7 +514,15 @@ export function FicheCommerce({ commerceId, onBack }: Props) {
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-semibold text-[#f1f5f9]">Rendez-vous</h2>
                 <button
-                  onClick={() => setShowRdvForm(!showRdvForm)}
+                  onClick={() => {
+                    setShowRdvForm(!showRdvForm);
+                    if (!showRdvForm && commerce?.commercial_id) {
+                      setNewRdv(prev => ({
+                        ...prev,
+                        commercial_id: commerce.commercial_id || ''
+                      }));
+                    }
+                  }}
                   className="px-3 py-1 bg-cyan-500/10 text-cyan-400 rounded-lg hover:bg-cyan-500/20 transition-all duration-200 text-sm font-medium flex items-center gap-1"
                 >
                   <Plus className="w-4 h-4" />
