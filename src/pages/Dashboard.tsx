@@ -73,7 +73,7 @@ export function Dashboard() {
 
       const totalCommerces = commerces?.length || 0;
       const rdvThisWeek = rdv?.length || 0;
-      const gagnes = commerces?.filter(c => c.statut === 'gagne').length || 0;
+      const gagnes = commerces?.filter(c => c.statut === 'devis_signe').length || 0;
       const tauxConversion = totalCommerces > 0 ? Math.round((gagnes / totalCommerces) * 100) : 0;
       const aRelancer = commerces?.filter(c => c.statut === 'relance').length || 0;
 
@@ -122,7 +122,7 @@ export function Dashboard() {
 
   const getStatutColor = (statut: string) => {
     const colors: Record<string, string> = {
-      gagne: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+      devis_signe: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
       rdv_pris: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
       relance: 'bg-orange-500/10 text-orange-400 border-orange-500/20',
       a_contacter: 'bg-slate-500/10 text-slate-400 border-slate-500/20',
@@ -136,7 +136,7 @@ export function Dashboard() {
       a_contacter: 'À contacter',
       rdv_pris: 'RDV pris',
       relance: 'Relance',
-      gagne: 'Gagné',
+      devis_signe: 'Devis Signé',
       perdu: 'Perdu',
     };
     return labels[statut] || statut;

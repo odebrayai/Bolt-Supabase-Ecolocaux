@@ -150,7 +150,7 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
 
   const getStatutColor = (statut: string) => {
     const colors: Record<string, string> = {
-      gagne: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+      devis_signe: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
       rdv_pris: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
       relance: 'bg-orange-500/10 text-orange-400 border-orange-500/20',
       a_contacter: 'bg-slate-500/10 text-slate-400 border-slate-500/20',
@@ -164,7 +164,7 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
       a_contacter: 'À contacter',
       rdv_pris: 'RDV pris',
       relance: 'Relance',
-      gagne: 'Gagné',
+      devis_signe: 'Devis Signé',
       perdu: 'Perdu',
     };
     return labels[statut] || statut;
@@ -283,7 +283,7 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
               <option value="a_contacter">À contacter</option>
               <option value="rdv_pris">RDV pris</option>
               <option value="relance">Relance</option>
-              <option value="gagne">Gagné</option>
+              <option value="devis_signe">Devis Signé</option>
               <option value="perdu">Perdu</option>
             </select>
 

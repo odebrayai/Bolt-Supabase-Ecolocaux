@@ -87,7 +87,8 @@ Deno.serve(async (req: Request) => {
         'a_contacter': 'a_contacter',
         'rdv_pris': 'rdv_pris',
         'relance': 'relance',
-        'gagne': 'gagne',
+        'gagne': 'devis_signe',
+        'devis_signe': 'devis_signe',
         'perdu': 'perdu',
       };
 

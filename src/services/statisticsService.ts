@@ -43,11 +43,11 @@ export async function fetchStatistics(): Promise<StatisticsData> {
 
 function calculateKPIs(commerces: Commerce[]): KPIData {
   const totalCommerces = commerces.length;
-  const gagnes = commerces.filter(c => c.statut === 'gagne').length;
+  const gagnes = commerces.filter(c => c.statut === 'devis_signe').length;
   const tauxConversion = totalCommerces > 0 ? (gagnes / totalCommerces) * 100 : 0;
 
   const caPotentiel = commerces
-    .filter(c => c.statut === 'gagne' && c.panier_moyen)
+    .filter(c => c.statut === 'devis_signe' && c.panier_moyen)
     .reduce((sum, c) => sum + (c.panier_moyen || 0), 0);
 
   const commercesActifs = commerces.filter(c =>
@@ -81,7 +81,7 @@ function calculateEvolution(commerces: Commerce[]): EvolutionData[] {
       a_contacter: commercesUpToDate.filter(c => c.statut === 'a_contacter').length,
       rdv_pris: commercesUpToDate.filter(c => c.statut === 'rdv_pris').length,
       relance: commercesUpToDate.filter(c => c.statut === 'relance').length,
-      gagne: commercesUpToDate.filter(c => c.statut === 'gagne').length,
+      devis_signe: commercesUpToDate.filter(c => c.statut === 'devis_signe').length,
       perdu: commercesUpToDate.filter(c => c.statut === 'perdu').length
     });
   }
@@ -129,10 +129,10 @@ function calculateTopPerformers(commerces: Commerce[], profiles: Profile[]): Top
   return Array.from(performerMap.entries())
     .map(([id, { profile, commerces }]) => {
       const totalCommerces = commerces.length;
-      const gagnes = commerces.filter(c => c.statut === 'gagne').length;
+      const gagnes = commerces.filter(c => c.statut === 'devis_signe').length;
       const tauxConversion = totalCommerces > 0 ? (gagnes / totalCommerces) * 100 : 0;
       const caPotentiel = commerces
-        .filter(c => c.statut === 'gagne' && c.panier_moyen)
+        .filter(c => c.statut === 'devis_signe' && c.panier_moyen)
         .reduce((sum, c) => sum + (c.panier_moyen || 0), 0);
 
       return {
@@ -163,11 +163,11 @@ function calculatePerformanceParType(commerces: Commerce[]): PerformanceParType[
   return Array.from(typeMap.entries())
     .map(([type, commercesList]) => {
       const total = commercesList.length;
-      const gagnes = commercesList.filter(c => c.statut === 'gagne').length;
+      const gagnes = commercesList.filter(c => c.statut === 'devis_signe').length;
       const tauxConversion = total > 0 ? (gagnes / total) * 100 : 0;
       const caMoyen = gagnes > 0
         ? commercesList
-            .filter(c => c.statut === 'gagne' && c.panier_moyen)
+            .filter(c => c.statut === 'devis_signe' && c.panier_moyen)
             .reduce((sum, c) => sum + (c.panier_moyen || 0), 0) / gagnes
         : 0;
 
@@ -196,7 +196,7 @@ function calculatePerformanceParVille(commerces: Commerce[]): PerformanceParVill
   return Array.from(villeMap.entries())
     .map(([ville, commercesList]) => {
       const total = commercesList.length;
-      const gagnes = commercesList.filter(c => c.statut === 'gagne').length;
+      const gagnes = commercesList.filter(c => c.statut === 'devis_signe').length;
       const tauxConversion = total > 0 ? (gagnes / total) * 100 : 0;
 
       return {
@@ -245,7 +245,7 @@ function calculateActiviteMensuelle(commerces: Commerce[], rendezVous: RendezVou
     rdvPlanifies: rdvCeMois.filter(r => r.statut === 'planifié' || r.statut === 'confirmé').length,
     rdvEffectues: rdvCeMois.filter(r => r.statut === 'effectué').length,
     nouveauxCommerces: commercesCeMois.length,
-    commercesGagnes: commercesCeMois.filter(c => c.statut === 'gagne').length
+    commercesGagnes: commercesCeMois.filter(c => c.statut === 'devis_signe').length
   };
 }
 
@@ -258,13 +258,13 @@ function calculateObjectifsMois(commerces: Commerce[]): ObjectifsMois {
     return createdDate >= firstDayOfMonth;
   });
 
-  const gagnesCeMois = commercesCeMois.filter(c => c.statut === 'gagne').length;
+  const gagnesCeMois = commercesCeMois.filter(c => c.statut === 'devis_signe').length;
   const tauxConversionCeMois = commercesCeMois.length > 0
     ? (gagnesCeMois / commercesCeMois.length) * 100
     : 0;
 
   const caCeMois = commercesCeMois
-    .filter(c => c.statut === 'gagne' && c.panier_moyen)
+    .filter(c => c.statut === 'devis_signe' && c.panier_moyen)
     .reduce((sum, c) => sum + (c.panier_moyen || 0), 0);
 
   return {

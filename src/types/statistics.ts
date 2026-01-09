@@ -10,7 +10,7 @@ export interface EvolutionData {
   a_contacter: number;
   rdv_pris: number;
   relance: number;
-  gagne: number;
+  devis_signe: number;
   perdu: number;
 }
 

@@ -401,7 +401,7 @@ export function FicheCommerce({ commerceId, onBack }: Props) {
                     <option value="a_contacter">À contacter</option>
                     <option value="rdv_pris">RDV pris</option>
                     <option value="relance">Relance</option>
-                    <option value="gagne">Gagné</option>
+                    <option value="devis_signe">Devis Signé</option>
                     <option value="perdu">Perdu</option>
                   </select>
                 </div>
