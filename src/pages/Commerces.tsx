@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Search, Plus, Download, Star, Phone, MoreVertical, X } from 'lucide-react';
+import { Search, Plus, Download, Star, Phone, X } from 'lucide-react';
 import { Header } from '../components/Header';
 import { supabase } from '../lib/supabase';
 import type { Database } from '../lib/database.types';
@@ -399,15 +399,12 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
                   <th className="px-6 py-4 text-left text-xs font-medium text-[#94a3b8] uppercase tracking-wider">
                     Statut
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-medium text-[#94a3b8] uppercase tracking-wider">
-                    Actions
-                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#1e293b]">
                 {filteredCommerces.length === 0 ? (
                   <tr>
-                    <td colSpan={8} className="px-6 py-12 text-center text-[#94a3b8]">
+                    <td colSpan={7} className="px-6 py-12 text-center text-[#94a3b8]">
                       Aucun commerce trouvé
                     </td>
                   </tr>
@@ -472,16 +469,6 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
                             À contacter
                           </span>
                         )}
-                      </td>
-                      <td className="px-6 py-4">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                          }}
-                          className="p-2 hover:bg-slate-700 rounded-lg transition-colors"
-                        >
-                          <MoreVertical className="w-4 h-4 text-[#94a3b8]" strokeWidth={1.5} />
-                        </button>
                       </td>
                     </tr>
                   ))
