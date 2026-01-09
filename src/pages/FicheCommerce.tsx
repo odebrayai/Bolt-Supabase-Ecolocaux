@@ -4,6 +4,7 @@ import { Header } from '../components/Header';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import type { Database } from '../lib/database.types';
+import { BusinessScoreCard } from '../components/BusinessScoreCard';
 
 type Commerce = Database['public']['Tables']['commerces']['Row'];
 type Profile = Database['public']['Tables']['profiles']['Row'];
@@ -229,6 +230,8 @@ export function FicheCommerce({ commerceId, onBack }: Props) {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
+            <BusinessScoreCard business={commerce} showBreakdown={true} />
+
             <div className="bg-[#12121a] rounded-lg border border-[#1e293b] p-6">
               <h2 className="text-lg font-semibold text-[#f1f5f9] mb-4">Informations générales</h2>
               <div className="space-y-4">

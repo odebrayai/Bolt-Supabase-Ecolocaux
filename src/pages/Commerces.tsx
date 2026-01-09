@@ -3,6 +3,8 @@ import { Search, Plus, Download, Star, Phone, MoreVertical, X } from 'lucide-rea
 import { Header } from '../components/Header';
 import { supabase } from '../lib/supabase';
 import type { Database } from '../lib/database.types';
+import { BusinessScoreBadge } from '../components/BusinessScoreCard';
+import { sortByScore, filterByScoreCategory } from '../utils/scoring';
 
 type Commerce = Database['public']['Tables']['commerces']['Row'];
 type Profile = Database['public']['Tables']['profiles']['Row'];
@@ -19,6 +21,7 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
   const [filterType, setFilterType] = useState('');
   const [filterStatut, setFilterStatut] = useState('');
   const [filterCommercial, setFilterCommercial] = useState('');
+  const [filterScore, setFilterScore] = useState<'max' | 'haute' | 'standard' | 'basse' | ''>('');
   const [commerciaux, setCommerciaux] = useState<Profile[]>([]);
 
   useEffect(() => {
@@ -46,7 +49,7 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
 
   useEffect(() => {
     applyFilters();
-  }, [commerces, searchTerm, filterType, filterStatut, filterCommercial]);
+  }, [commerces, searchTerm, filterType, filterStatut, filterCommercial, filterScore]);
 
   const loadData = async () => {
     try {
@@ -126,6 +129,12 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
       filtered = filtered.filter(c => c.commercial_id === filterCommercial);
     }
 
+    if (filterScore) {
+      filtered = filterByScoreCategory(filtered, filterScore);
+    }
+
+    filtered = sortByScore(filtered, false);
+
     setFilteredCommerces(filtered);
   };
 
@@ -134,6 +143,7 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
     setFilterType('');
     setFilterStatut('');
     setFilterCommercial('');
+    setFilterScore('');
   };
 
   const getTypeColor = (type: string) => {
@@ -247,7 +257,60 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
       />
 
       <div className="p-4 sm:p-6 lg:p-8 space-y-4 sm:space-y-6">
-        <div className="bg-[#12121a] rounded-lg border border-[#1e293b] p-4">
+        <div className="bg-[#12121a] rounded-lg border border-[#1e293b] p-4 space-y-4">
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => setFilterScore('')}
+              className={`px-4 py-2 rounded-full text-xs font-medium border transition-all ${
+                filterScore === ''
+                  ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/50'
+                  : 'bg-gray-800/30 text-gray-400 border-gray-700/50 hover:bg-gray-800/50'
+              }`}
+            >
+              Tous les scores
+            </button>
+            <button
+              onClick={() => setFilterScore('max')}
+              className={`px-4 py-2 rounded-full text-xs font-medium border transition-all ${
+                filterScore === 'max'
+                  ? 'bg-red-900/30 text-red-400 border-red-800/50'
+                  : 'bg-gray-800/30 text-gray-400 border-gray-700/50 hover:bg-red-900/20'
+              }`}
+            >
+              🔥 Priorité MAX
+            </button>
+            <button
+              onClick={() => setFilterScore('haute')}
+              className={`px-4 py-2 rounded-full text-xs font-medium border transition-all ${
+                filterScore === 'haute'
+                  ? 'bg-orange-900/30 text-orange-400 border-orange-800/50'
+                  : 'bg-gray-800/30 text-gray-400 border-gray-700/50 hover:bg-orange-900/20'
+              }`}
+            >
+              ⚡ Haute Priorité
+            </button>
+            <button
+              onClick={() => setFilterScore('standard')}
+              className={`px-4 py-2 rounded-full text-xs font-medium border transition-all ${
+                filterScore === 'standard'
+                  ? 'bg-green-900/30 text-green-400 border-green-800/50'
+                  : 'bg-gray-800/30 text-gray-400 border-gray-700/50 hover:bg-green-900/20'
+              }`}
+            >
+              ✅ Standard
+            </button>
+            <button
+              onClick={() => setFilterScore('basse')}
+              className={`px-4 py-2 rounded-full text-xs font-medium border transition-all ${
+                filterScore === 'basse'
+                  ? 'bg-gray-800/30 text-gray-400 border-gray-700/50'
+                  : 'bg-gray-800/30 text-gray-500 border-gray-700/50 hover:bg-gray-800/50'
+              }`}
+            >
+              ⏸️ Basse Priorité
+            </button>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94a3b8]" strokeWidth={1.5} />
@@ -328,6 +391,9 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
                     Téléphone
                   </th>
                   <th className="px-6 py-4 text-left text-xs font-medium text-[#94a3b8] uppercase tracking-wider">
+                    Score
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-medium text-[#94a3b8] uppercase tracking-wider">
                     Note
                   </th>
                   <th className="px-6 py-4 text-left text-xs font-medium text-[#94a3b8] uppercase tracking-wider">
@@ -344,7 +410,7 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
               <tbody className="divide-y divide-[#1e293b]">
                 {filteredCommerces.length === 0 ? (
                   <tr>
-                    <td colSpan={8} className="px-6 py-12 text-center text-[#94a3b8]">
+                    <td colSpan={9} className="px-6 py-12 text-center text-[#94a3b8]">
                       Aucun commerce trouvé
                     </td>
                   </tr>
@@ -381,6 +447,9 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
                             {commerce.telephone}
                           </a>
                         )}
+                      </td>
+                      <td className="px-6 py-4">
+                        <BusinessScoreBadge business={commerce} compact />
                       </td>
                       <td className="px-6 py-4">
                         {renderStars(commerce.note)}

@@ -4,6 +4,7 @@ import { Header } from '../components/Header';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import type { Database } from '../lib/database.types';
+import { ScoreStatisticsWidget } from '../components/ScoreStatisticsWidget';
 
 type Commerce = Database['public']['Tables']['commerces']['Row'];
 type RendezVous = Database['public']['Tables']['rendez_vous']['Row'];
@@ -27,6 +28,7 @@ export function Dashboard() {
     aRelancer: 0,
   });
   const [recentCommerces, setRecentCommerces] = useState<CommerceWithProfile[]>([]);
+  const [allCommerces, setAllCommerces] = useState<Commerce[]>([]);
   const [upcomingRdv, setUpcomingRdv] = useState<RendezVousWithData[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -83,6 +85,8 @@ export function Dashboard() {
         tauxConversion,
         aRelancer,
       });
+
+      setAllCommerces(commerces || []);
 
       const { data: recent } = await supabase
         .from('commerces')
@@ -211,6 +215,8 @@ export function Dashboard() {
             <p className="text-sm text-[#94a3b8]">À relancer</p>
           </div>
         </div>
+
+        <ScoreStatisticsWidget businesses={allCommerces} />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           <div className="bg-[#12121a] rounded-lg border border-[#1e293b] p-6">
