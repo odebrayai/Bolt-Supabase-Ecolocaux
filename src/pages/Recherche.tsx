@@ -65,9 +65,11 @@ export function Recherche() {
         throw new Error('Aucun commerce trouvé pour cette recherche');
       }
 
-      setMessage(`${commercesData.length} commerce(s) trouvé(s), import en cours...`);
+      const limitedCommerces = commercesData.slice(0, nombre);
 
-      const commercesWithCommercial = commercesData.map((commerce: any) => ({
+      setMessage(`${limitedCommerces.length} commerce(s) trouvé(s), import en cours...`);
+
+      const commercesWithCommercial = limitedCommerces.map((commerce: any) => ({
         ...commerce,
         commercial_id: commercialId || null,
       }));
@@ -108,7 +110,7 @@ export function Recherche() {
         throw new Error(result.error || 'Erreur lors de l\'import');
       }
 
-      setMessage(`✓ ${result.data.length} ${type}(s) à ${ville} ajouté(s) avec succès au CRM !`);
+      setMessage(`✓ ${limitedCommerces.length} ${type}(s) à ${ville} ajouté(s) avec succès au CRM !`);
       setVille('');
       setType('');
       setNombre(10);
