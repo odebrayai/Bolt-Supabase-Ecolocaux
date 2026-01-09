@@ -242,8 +242,8 @@ function calculateActiviteMensuelle(commerces: Commerce[], rendezVous: RendezVou
   });
 
   return {
-    rdvPlanifies: rdvCeMois.filter(r => r.statut === 'planifie').length,
-    rdvEffectues: rdvCeMois.filter(r => r.statut === 'effectue').length,
+    rdvPlanifies: rdvCeMois.filter(r => r.statut === 'planifié' || r.statut === 'confirmé').length,
+    rdvEffectues: rdvCeMois.filter(r => r.statut === 'effectué').length,
     nouveauxCommerces: commercesCeMois.length,
     commercesGagnes: commercesCeMois.filter(c => c.statut === 'gagne').length
   };

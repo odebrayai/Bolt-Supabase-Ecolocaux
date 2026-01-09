@@ -4,6 +4,7 @@ import { Header } from '../components/Header';
 import { EvolutionLineChart } from '../components/charts/EvolutionLineChart';
 import { TypeDonutChart } from '../components/charts/TypeDonutChart';
 import { fetchStatistics } from '../services/statisticsService';
+import { supabase } from '../lib/supabase';
 import type { StatisticsData } from '../types/statistics';
 
 export function Statistiques() {
@@ -12,6 +13,25 @@ export function Statistiques() {
 
   useEffect(() => {
     loadStatistics();
+
+    const commercesChannel = supabase
+      .channel('commerces_stats_changes')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'commerces' }, () => {
+        loadStatistics();
+      })
+      .subscribe();
+
+    const rdvChannel = supabase
+      .channel('rendez_vous_stats_changes')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'rendez_vous' }, () => {
+        loadStatistics();
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(commercesChannel);
+      supabase.removeChannel(rdvChannel);
+    };
   }, []);
 
   const loadStatistics = async () => {
