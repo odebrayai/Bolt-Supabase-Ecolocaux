@@ -5,7 +5,6 @@ import {
   Calendar,
   Users,
   BarChart3,
-  Settings,
   LogOut,
   X,
   Menu
@@ -28,7 +27,6 @@ const menuItems = [
   { id: 'rendez-vous', label: 'Rendez-vous', icon: Calendar },
   { id: 'equipe', label: 'Équipe', icon: Users },
   { id: 'statistiques', label: 'Statistiques', icon: BarChart3 },
-  { id: 'parametres', label: 'Paramètres', icon: Settings },
 ];
 
 export function Sidebar({ currentPage, onNavigate, isOpen, onClose, onToggle }: SidebarProps) {
