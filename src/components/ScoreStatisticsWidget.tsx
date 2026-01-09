@@ -21,10 +21,10 @@ export function ScoreStatisticsWidget({ businesses }: ScoreStatisticsWidgetProps
       return {
         average: 0,
         categories: {
-          max: { count: 0, percentage: 0, label: 'Priorité MAX', emoji: '🔥', colorClasses: 'bg-red-900/30 text-red-400' },
-          haute: { count: 0, percentage: 0, label: 'Haute Priorité', emoji: '⚡', colorClasses: 'bg-orange-900/30 text-orange-400' },
-          standard: { count: 0, percentage: 0, label: 'Standard', emoji: '✅', colorClasses: 'bg-green-900/30 text-green-400' },
-          basse: { count: 0, percentage: 0, label: 'Basse Priorité', emoji: '⏸️', colorClasses: 'bg-gray-800/30 text-gray-400' }
+          max: { count: 0, percentage: 0, label: 'Priorité Urgent', emoji: '🔥', colorClasses: 'bg-red-900/30 text-red-400' },
+          haute: { count: 0, percentage: 0, label: 'Priorité Important', emoji: '⚡', colorClasses: 'bg-orange-900/30 text-orange-400' },
+          standard: { count: 0, percentage: 0, label: 'Priorité Moyenne', emoji: '✅', colorClasses: 'bg-green-900/30 text-green-400' },
+          basse: { count: 0, percentage: 0, label: 'Priorité Basse', emoji: '⏸️', colorClasses: 'bg-gray-800/30 text-gray-400' }
         }
       };
     }
@@ -53,28 +53,28 @@ export function ScoreStatisticsWidget({ businesses }: ScoreStatisticsWidgetProps
         max: {
           count: categories.max,
           percentage: Math.round((categories.max / total) * 100),
-          label: 'Priorité MAX',
+          label: 'Priorité Urgent',
           emoji: '🔥',
           colorClasses: 'bg-red-900/30 text-red-400'
         },
         haute: {
           count: categories.haute,
           percentage: Math.round((categories.haute / total) * 100),
-          label: 'Haute Priorité',
+          label: 'Priorité Important',
           emoji: '⚡',
           colorClasses: 'bg-orange-900/30 text-orange-400'
         },
         standard: {
           count: categories.standard,
           percentage: Math.round((categories.standard / total) * 100),
-          label: 'Standard',
+          label: 'Priorité Moyenne',
           emoji: '✅',
           colorClasses: 'bg-green-900/30 text-green-400'
         },
         basse: {
           count: categories.basse,
           percentage: Math.round((categories.basse / total) * 100),
-          label: 'Basse Priorité',
+          label: 'Priorité Basse',
           emoji: '⏸️',
           colorClasses: 'bg-gray-800/30 text-gray-400'
         }

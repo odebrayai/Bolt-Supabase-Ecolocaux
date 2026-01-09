@@ -277,7 +277,7 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
                   : 'bg-gray-800/30 text-gray-400 border-gray-700/50 hover:bg-red-900/20'
               }`}
             >
-              🔥 Priorité MAX
+              🔥 Priorité Urgent
             </button>
             <button
               onClick={() => setFilterScore('haute')}
@@ -287,7 +287,7 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
                   : 'bg-gray-800/30 text-gray-400 border-gray-700/50 hover:bg-orange-900/20'
               }`}
             >
-              ⚡ Haute Priorité
+              ⚡ Priorité Important
             </button>
             <button
               onClick={() => setFilterScore('standard')}
@@ -297,7 +297,7 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
                   : 'bg-gray-800/30 text-gray-400 border-gray-700/50 hover:bg-green-900/20'
               }`}
             >
-              ✅ Standard
+              ✅ Priorité Moyenne
             </button>
             <button
               onClick={() => setFilterScore('basse')}
@@ -307,7 +307,7 @@ export function Commerces({ onNavigate, onSelectCommerce }: { onNavigate: (page:
                   : 'bg-gray-800/30 text-gray-500 border-gray-700/50 hover:bg-gray-800/50'
               }`}
             >
-              ⏸️ Basse Priorité
+              ⏸️ Priorité Basse
             </button>
           </div>
 
