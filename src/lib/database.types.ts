@@ -146,7 +146,7 @@ export interface Database {
           commercial_id: string
           date: string
           heure: string
-          statut: 'planifie' | 'effectue' | 'annule'
+          statut: 'planifié' | 'confirmé' | 'reporté' | 'effectué' | 'annulé'
           notes: string | null
           created_at: string
           updated_at: string
@@ -157,7 +157,7 @@ export interface Database {
           commercial_id: string
           date: string
           heure: string
-          statut?: 'planifie' | 'effectue' | 'annule'
+          statut?: 'planifié' | 'confirmé' | 'reporté' | 'effectué' | 'annulé'
           notes?: string | null
           created_at?: string
           updated_at?: string
@@ -168,7 +168,7 @@ export interface Database {
           commercial_id?: string
           date?: string
           heure?: string
-          statut?: 'planifie' | 'effectue' | 'annule'
+          statut?: 'planifié' | 'confirmé' | 'reporté' | 'effectué' | 'annulé'
           notes?: string | null
           created_at?: string
           updated_at?: string
