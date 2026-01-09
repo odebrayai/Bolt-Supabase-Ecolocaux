@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { Layout } from './components/Layout';
 import { Login } from './pages/Login';
@@ -9,11 +9,24 @@ import { FicheCommerce } from './pages/FicheCommerce';
 import { Equipe } from './pages/Equipe';
 import RendezVous from './pages/RendezVous';
 import { Statistiques } from './pages/Statistiques';
+import QRCodePage from './pages/QRCode';
 
 function AppContent() {
   const { user, loading } = useAuth();
   const [currentPage, setCurrentPage] = useState('dashboard');
   const [selectedCommerceId, setSelectedCommerceId] = useState<string | null>(null);
+  const [showQRCode, setShowQRCode] = useState(false);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('qr') === 'true' || window.location.pathname === '/qr') {
+      setShowQRCode(true);
+    }
+  }, []);
+
+  if (showQRCode) {
+    return <QRCodePage />;
+  }
 
   if (loading) {
     return (
